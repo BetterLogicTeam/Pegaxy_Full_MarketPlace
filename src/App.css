@@ -1,0 +1,8 @@
+.App{
+  background-image: url('./Components/Assest/background_MP.jpg');
+  height: auto;
+  background-position:center;
+  background-size: cover;
+  background-attachment: fixed;
+  
+}
