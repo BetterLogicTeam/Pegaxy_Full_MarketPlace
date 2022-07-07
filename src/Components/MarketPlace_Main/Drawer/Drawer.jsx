@@ -8,7 +8,8 @@ import {
     Routes,
     Route,
     Link,
-    useNavigate
+    useNavigate,
+    Outlet
 
 } from "react-router-dom";
 import { WithRouter } from 'react-router-dom'
@@ -36,6 +37,10 @@ import Search_menu from '../MarketPlace_Header_search/Search_menu';
 import Buy_nft from '../Buy_NFT/Buy_nft';
 
 import Auctions_NFT from '../Auction_NFT/Auctions_NFT';
+import NFT_Buy from '../Buy_NFT/Buy_nft';
+// import Biding_NFT from '../Biding_NFT/';
+
+
 import SideBar_MP from '../SideBar_MP/SideBar_MP';
 
 
@@ -110,8 +115,12 @@ const DrawerSiderbar = props => {
         setOpen(false);
     };
 
-
-
+    function auctionnavigation() {
+        navigate("/dashboard/Auctions_NFT")
+    }
+    function buynavigation() {
+        navigate("/dashboard/Buy_nft")
+    }
     return (
         <>
 
@@ -133,7 +142,7 @@ const DrawerSiderbar = props => {
 
       </AppBar> */}
 
-              
+
                 <div style={{ height: "78vh", borderRight: '2px solid #454769', marginTop: '11rem' }} className="drawer_main">
                     <ChevronRightIcon open={open} className="Appbar" sx={{ mr: 0, ...(open && { display: 'none' }), cursor: "pointer", }} onClick={handleDrawerOpen} aria-label="open drawer"
 
@@ -192,7 +201,8 @@ const DrawerSiderbar = props => {
                                             <div className="filterCheck">
                                                 <div className="item-filter">
                                                     {/* <Link to="/"> */}
-                                                    <label className="formCheck">Buy now<input type="checkbox" />
+
+                                                    <label onClick={() => { buynavigation() }} className="formCheck">Buy now<input type="checkbox" />
                                                         <span className="checkmark">
                                                         </span>
                                                     </label>
@@ -202,7 +212,7 @@ const DrawerSiderbar = props => {
                                                 </div>
                                                 <div className="item-filter">
                                                     {/* <Link to="/Auctions_NFT"> */}
-                                                    <label className="formCheck">Auction<input type="checkbox" />
+                                                    <label onClick={() => { auctionnavigation() }} className="formCheck">Auction<input type="checkbox" />
                                                         <span className="checkmark">
                                                         </span>
                                                     </label>
@@ -876,20 +886,21 @@ const DrawerSiderbar = props => {
                 <Main open={open} className="main_div_all">
                     <SideBar_MP />
                     <Search_menu />
-                    <Auctions_NFT/>
+                    {/* <Auctions_NFT/> */}
                     {/* <Buy_nft /> */}
-                    {/* <BrowserRouter>
-                        <Routes>
-                            <Route exact path="/" element={<Buy_nft />} />
-                            <Route exact path="/Auctions_NFT" element={<Auctions_NFT />} />
 
+                    <Routes>
+                        
+                        <Route exact path="/" element={<Buy_nft />} />
+                        {/* <Route exact path="/Auctions_NFT" element={<Auctions_NFT />} /> */}
+                        {/* <Route exact path="/NFT_Buy" element={<NFT_Buy />} /> */}
+                        {/* <Route exact path="/" element={<Buy_nft />} /> */}
 
+                        {/* <Route exact path="/Biding/:id" element={<Biding_NFT />} /> */}
 
+                    </Routes>
+                    <Outlet />
 
-
-                        </Routes>
-
-                    </BrowserRouter> */}
 
 
                 </Main>
