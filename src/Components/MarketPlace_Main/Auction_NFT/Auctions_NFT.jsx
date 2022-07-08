@@ -3,41 +3,31 @@ import './Auctions_style.css'
 import { BsHeartFill } from 'react-icons/bs'
 import { IoIosFlash } from 'react-icons/io'
 import { FaMarsStroke } from 'react-icons/fa'
-import { useSelector } from 'react-redux'
+
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { loadWeb3 } from '../../apis/api'
 import { nftMarketContractAddress, nftMarketContractAddress_Abi } from '../../utilies/Contract'
-
+import TimeCard from "./TimeCard"
 export default function Auctions_NFT() {
-    let History = useNavigate()
-
+    let navigate = useNavigate()
     const [apiData, setapiData] = useState()
-
     const [tokenId, settokenId] = useState()
-    const [price, setprice] = useState()
-    const [duration, setduration] = useState()
     const [nftcontactadd, setnftcontactadd] = useState()
     const [hightbid, sethightbid] = useState()
     const [base_price, setbase_price] = useState()
-    const [bidEndTime, setbidEndTime] = useState()
     const [Seconds, setSeconds] = useState(0)
     const [Days_here, setDays_here] = useState(0)
     const [Hours_here, setHours_here] = useState(0)
     const [Munits_here, setMunits_here] = useState(0)
-    const [img_url, setimg_url] = useState()
-    const [setdisable, setsetdisable] = useState()
-    const [getinputdata, setgetinputdata] = useState()
     const [boluher, setboluher] = useState(true)
     const [SendAddress, setSendAddress] = useState()
     const [HighestBideradd, setHighestBideradd] = useState()
-    let [isSpinner, setIsSpinner] = useState(false)
     const [Token_Id, setToken_Id] = useState()
     const [nftname_here, setnftname_here] = useState()
     const [Resonse, setResonse] = useState()
     const [ArrayHere, setArrayHere] = useState()
 
-    const [btnspiiner, setbtnspiiner] = useState("PLACE A BID")
 
     let alldata_here
 
@@ -46,7 +36,7 @@ export default function Auctions_NFT() {
         try {
 
             let res = await axios.get("https://whenftapi.herokuapp.com/OnAuction_marketplace_history?id=100")
-            console.log("res", res.data.data);
+            // console.log("res", res.data.data);
             res = res.data.data
             // console.log("bidEndTimebidEndTime", res.bidEndTime);
             setapiData(res)
@@ -66,53 +56,44 @@ export default function Auctions_NFT() {
                 `https://whenftapi.herokuapp.com/OnAuction_marketplace_history?id=100`
             );
             res = res.data.data
-            let res_length=res.length
-            console.log("length_is ",res_length);
-            let data_Array=[]
-            for(let i=0;i<res_length;i++){
+            console.log("what is in result ", res);
 
-                let Nft_name=res[i].name
-                let NFT_price=res[i].price
-                let bidtime=res[i].bidEndTime
+            let res_length = res.length
+            // console.log("length_is ",res_length);
+            let data_Array = []
+            for (let i = 0; i < res_length; i++) {
+
+                let Nft_name = res[i].name
+                let NFT_price = res[i].price
+                let bidtime = res[i].bidEndTime
                 var currentDateTime = new Date();
                 let resultInSeconds = currentDateTime.getTime() / 1000;
-                let Time_here = bidtime - resultInSeconds
-                let TimeFinal = parseInt(Time_here)
-                console.log("Final_time_here",TimeFinal);
-                let days=0
-                let hours=0
-                let munites =0
-                let second_here=0
-                if (TimeFinal <0) {
-                    console.log("Check_here");
-
-
-                    setboluher(false)
-        
-                } else {
-                    setboluher(true)
-
-                     days = parseInt(TimeFinal / 86400)
-                    
+                let TimeFinal = parseInt(bidtime - resultInSeconds)
+                // console.log("Final_time_here", TimeFinal);
+                let days = 0
+                let hours = 0
+                let munites = 0
+                let second_here = 0
+                if (TimeFinal > 0) {
+                    // alert("time final less then 0");
+                    days = parseInt(TimeFinal / 86400)
                     setDays_here(days)
                     TimeFinal = TimeFinal % (86400)
-                     hours = parseInt(TimeFinal / 3600)
+                    hours = parseInt(TimeFinal / 3600)
                     setHours_here(hours)
                     TimeFinal %= 3600
-                     munites = parseInt(TimeFinal / 60)
+                    munites = parseInt(TimeFinal / 60)
                     // console.log("dayaaa",munites);
                     setMunits_here(munites)
                     TimeFinal %= 60
-                     second_here = parseInt(TimeFinal)
+                    second_here = parseInt(TimeFinal)
                     setSeconds(second_here)
-        
+
                 }
 
-
-                data_Array=[...data_Array,{name:Nft_name,price:NFT_price,BidTime:bidtime,Day:days,Hours:hours,Munites:munites,second_here:second_here} ]
+                data_Array = [...data_Array, { name: Nft_name, price: NFT_price, BidTime: bidtime, Day: days, Hours: hours, Munites: munites, second_here: second_here }]
                 setArrayHere(data_Array)
-                console.log("i",data_Array);
-
+                // console.log("i",data_Array);
 
             }
 
@@ -122,7 +103,6 @@ export default function Auctions_NFT() {
         }
 
     }
-
 
     const auction = async () => {
         const web3 = window.web3;
@@ -150,8 +130,6 @@ export default function Auctions_NFT() {
         tokenId_here = tokenId_here.tokenId;
         setToken_Id(tokenId_here)
 
-        console.log("tokenId_herehhhhhhhhhhhhh", res.data.data);
-
 
         alldata_here = res.data.data
         alldata_here = alldata_here.itemId;
@@ -171,10 +149,7 @@ export default function Auctions_NFT() {
         let resultInSeconds = currentDateTime.getTime() / 1000;
         let Time_here = bidEndTime - resultInSeconds
         let TimeFinal = parseInt(Time_here)
-        console.log("check",TimeFinal);
-
-
-      
+        console.log("check", TimeFinal);
 
 
 
@@ -220,15 +195,11 @@ export default function Auctions_NFT() {
     };
 
 
-
-
-
-
     useEffect(() => {
 
         Fatch_Api_data()
         // auction()
-      
+
         setInterval(() => {
             getTime()
             //   heightestbid()
@@ -242,13 +213,12 @@ export default function Auctions_NFT() {
 
             <div className="">
 
-
                 <div className="main_div_buy_nft">
                     {
                         ArrayHere?.map((items, index) => {
                             return (
                                 <>
-                                    <div className="cardPega default breed-type breed-pacer classPega-1" onClick={() => History('/Biding/' + index)}>
+                                    <div className="cardPega default breed-type breed-pacer classPega-1" onClick={() => navigate('/Biding/' + index)}>
                                         <div className="card-inner flip-card-inner">
                                             <div className="hover-action">
                                                 <div className="action-inner">i</div>
@@ -300,15 +270,10 @@ export default function Auctions_NFT() {
                                                             <span>{items.price}</span>
                                                         </div>
                                                     </div>
-                                                    <div className="info-right" style={{color: "#ff9f00"}}>
-                                                        {
-                                                                      console.log("boluher",boluher)
-                                                        }
-                                                        {
-                                                  
-                                                            boluher ? (<><p>Sale Ended</p></>): (<> {items.Day}:{items.Hours}:{items.Munites}:{items.second_here}</>)
-                                                        }
-                                                       
+                                                    <div className="info-right" style={{ color: "#ff9f00" }}>
+                                                        <TimeCard item={items} />
+
+
                                                     </div>
                                                 </div>
                                             </div>

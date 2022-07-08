@@ -13,8 +13,10 @@ import { loadWeb3 } from '../../apis/api'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Spinner from 'react-bootstrap/Spinner'
-
+import {Link, Routes, Route, useNavigate} from 'react-router-dom'
 export default function Biding_NFT() {
+
+    const navigate = useNavigate();
     const [showbiding, setshowbiding] = React.useState(false);
     const { id } = useParams();
 
@@ -343,7 +345,7 @@ export default function Biding_NFT() {
                                     <span style={{ boxSizing: "border-box", display: "inline-block", overflow: "hidden", width: "16px", height: "16px", background: "none", opacity: "1", border: "0px", margin: "0px", padding: " 0px", position: "relative" }}>
                                         <img alt="Back" src="https://cdn.pegaxy.io/statics/marketplace/public/v3/images/ic_back.png" decoding="async" data-nimg="fixed" style={{ position: "absolute", inset: "0px", boxSizing: "border-box", padding: "0px", border: "none", margin: "auto", display: "block", width: "0px", height: "0px", minWidth: "100%", maxWidth: "100%", minHeight: "100%", maxHeight: "100%" }} />
                                     </span>
-                                    <span className='text-white'>BACK</span>
+                                    <span className='text-white' onClick={() => navigate(-1)}>BACK</span>
                                 </div>
                             </div>
                             <div className='bxDetail'>

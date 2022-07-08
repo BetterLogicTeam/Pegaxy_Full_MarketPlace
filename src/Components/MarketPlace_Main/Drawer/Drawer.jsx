@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import './Drawer_style.css'
+// import MultiRangeSlider from "multi-range-slider-react";
 
 import {
     BrowserRouter,
@@ -96,16 +97,62 @@ const DrawerSiderbar = props => {
     let navigate = useNavigate();
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
-    const [minValue, set_minValue] = React.useState(0);
-    const [maxValue, set_maxValue] = React.useState(4);
-    const [show, setShow] = React.useState(false);
+    const [speedminValue, set_Speed_minValue] = React.useState(0);
+    const [speedmaxValue, set_Speed_maxValue] = React.useState(10);
+    const [strengthminValue, set_Strength_minValue] = React.useState(0);
+    const [strengthmaxValue,set_Strength_maxValue] = React.useState(10);
+    const [LightningminValue, set_Lightning_minValue] = React.useState(0);
+    const [LightningmaxValue,set_Lightning_maxValue] = React.useState(10);
+    const [fireminValue, set_Fire_minValue] = React.useState(0);
+    const [firemaxValue,set_Fire_maxValue] = React.useState(10);
+    const [waterminValue, set_Water_minValue] = React.useState(0);
+    const [watermaxValue,set_Water_maxValue] = React.useState(10);
+    const [windminValue, set_Wind_minValue] = React.useState(0);
+    const [windmaxValue,set_Wind_maxValue] = React.useState(10);
+    const [breedminValue, set_Breed_minValue] = React.useState(0);
+    const [breedmaxValue,set_Breed_maxValue] = React.useState(10);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const handleInput = (e) => {
-        set_minValue(e.minValue);
-        set_maxValue(e.maxValue);
+
+    const handleSpeed = (e) => {
+        set_Speed_minValue(e.minValue);
+        set_Speed_maxValue(e.maxValue); 
+
     };
+    const handleStrength = (e) => {
+        set_Strength_minValue(e.minValue);
+        set_Strength_maxValue(e.maxValue)
+
+    };
+
+    const handleLightning = (e) => {
+        set_Lightning_minValue(e.minValue);
+        set_Lightning_maxValue(e.maxValue)
+
+    };
+
+    const handleFire = (e) => {
+        set_Fire_minValue(e.minValue);
+        set_Fire_maxValue(e.maxValue)
+
+    };
+
+    const handleWater = (e) => {
+        set_Water_minValue(e.minValue);
+        set_Water_maxValue(e.maxValue)
+
+    };
+    const handleWind = (e) => {
+        set_Wind_minValue(e.minValue);
+        set_Wind_maxValue(e.maxValue)
+
+    };
+
+    const handleBreedCount = (e) => {
+        set_Breed_minValue(e.minValue);
+        set_Breed_maxValue(e.maxValue)
+
+    };
+
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -121,6 +168,8 @@ const DrawerSiderbar = props => {
     function buynavigation() {
         navigate("/dashboard/Buy_nft")
     }
+
+
     return (
         <>
 
@@ -151,6 +200,7 @@ const DrawerSiderbar = props => {
 
 
                 <Drawer
+                // transitionDuration={1000}
                     sx={{
                         width: drawerWidth,
                         flexShrink: 0,
@@ -163,6 +213,8 @@ const DrawerSiderbar = props => {
                         },
                     }}
                     variant="persistent"
+                    role="presentation"
+                    
                     anchor="left"
                     open={open}
                     className="drawer_main"
@@ -174,7 +226,7 @@ const DrawerSiderbar = props => {
                             <div className="title-btn">Reset</div>
                         </div>
 
-                        <AiOutlineArrowLeft onClick={handleDrawerClose} style={{ color: 'white', cursor: "pointer" }} />
+                        <ChevronLeftIcon onClick={handleDrawerClose} style={{ color: 'white', cursor: "pointer" }} />
                     </DrawerHeader>
                     <Divider />
                     <List>
@@ -417,70 +469,24 @@ const DrawerSiderbar = props => {
                                             <div className="title">Breed Count</div>
                                         </button>
                                     </h2>
-                                    <MultiRangeSlider
-                                        min={0}
-                                        max={10}
-                                        // step={5}
-                                        // ruler={true}
-                                        // label={true}
-                                        // preventWheel={false}
-                                        minValue={minValue}
-                                        maxValue={maxValue}
-                                        onInput={(e) => {
-                                            handleInput(e);
-                                        }}
-                                    />
+
                                     <div className="accordion-collapse collapse show">
                                         <div className="accordion-body">
                                             <div className="filterSlider">
-                                                <div className="slider-value">
-                                                    <div className="value-number">0</div>
-                                                    <div className="value-slider">
-                                                        <span label="true" className="MuiSlider-colorPrimary MuiSlider-sizeMedium MuiSlider-root MuiSlider-marked css-9cct2k">
-                                                            <span className="MuiSlider-rail css-b04pc9">
-                                                            </span>
-                                                            <span className="MuiSlider-track css-1t2bqnt" style={{ left: "0%", width: "100%" }}>
-                                                            </span>
-                                                            <span data-index="0" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "0%" }}>
-                                                            </span>
-                                                            <span aria-hidden="true" data-index="0" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "0%" }}>0</span>
-                                                            <span data-index="1" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "14.2857%" }}>
-                                                            </span>
-                                                            <span aria-hidden="true" data-index="1" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "14.2857%" }}>1</span>
-                                                            <span data-index="2" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "28.5714%" }}>
-                                                            </span>
-                                                            <span aria-hidden="true" data-index="2" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "28.5714%" }}>2</span>
-                                                            <span data-index="3" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "42.8571%" }}>
-                                                            </span>
-                                                            <span aria-hidden="true" data-index="3" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "42.8571%" }}>3</span>
-                                                            <span data-index="4" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "57.1429%" }}></span>
-                                                            <span aria-hidden="true" data-index="4" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "57.1429%" }}>4</span>
-                                                            <span data-index="5" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "71.4286%" }}></span>
-                                                            <span aria-hidden="true" data-index="5" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "71.4286%" }}>5</span>
-                                                            <span data-index="6" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "85.7143%" }}></span>
-                                                            <span aria-hidden="true" data-index="6" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "85.7143%" }}>6</span>
-                                                            <span data-index="7" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "100%" }}></span>
-                                                            <span aria-hidden="true" data-index="7" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "100%" }}>7</span>
-                                                            <span data-index="0" className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium MuiSlider-thumb css-7drnjp" style={{ left: "0%", pointerEvents: "none" }}>
-                                                                <input aria-orientation="horizontal" aria-valuemax="7" aria-valuemin="0" type="range" min="0" max="7" step="1" data-index="0" aria-label="Minimum distance" aria-valuenow="0" aria-valuetext="0" value="0" style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", height: "100%", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", whiteSpace: "nowrap", width: "100%", direction: "ltr" }} />
-                                                                <span className="MuiSlider-valueLabel css-1s3sa3n" aria-hidden="true">
-                                                                    <span className="MuiSlider-valueLabelCircle">
-                                                                        <span className="MuiSlider-valueLabelLabel">0</span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                            <span data-index="1" className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium MuiSlider-thumb css-7drnjp" style={{ left: "100%", pointerEvents: "none" }}>
-                                                                <input aria-orientation="horizontal" aria-valuemax="7" aria-valuemin="0" type="range" min="0" max="7" step="1" data-index="1" aria-label="Minimum distance" aria-valuenow="7" aria-valuetext="7" value="7" style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", height: "100%", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", whiteSpace: "nowrap", width: "100%", direction: "ltr" }} />
-                                                                <span className="MuiSlider-valueLabel css-1s3sa3n" aria-hidden="true">
-                                                                    <span className="MuiSlider-valueLabelCircle">
-                                                                        <span className="MuiSlider-valueLabelLabel">7</span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    <div className="value-number">7</div>
-                                                </div>
+                                            <MultiRangeSlider
+                                            tooltip={true}
+                                                    min={0}
+                                                    max={10}
+                                                    step={1}
+                                                    // ruler={true}
+                                                    label={true}
+                                                    // preventWheel={false}
+                                                    minValue={breedminValue}
+                                                    maxValue={breedmaxValue}
+                                                    onInput={(e) => {
+                                                        handleBreedCount(e);
+                                                    }}
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -500,55 +506,19 @@ const DrawerSiderbar = props => {
                                                     </span>
                                                     <span className='ml-2'> Speed</span>
                                                 </div>
-                                                <div className="slider-value">
-                                                    <div className="value-number">0</div>
-                                                    <div className="value-slider">
-                                                        <span label="true" className="MuiSlider-colorPrimary MuiSlider-sizeMedium MuiSlider-root MuiSlider-marked css-9cct2k">
-                                                            <span className="MuiSlider-rail css-b04pc9">
-                                                            </span>
-                                                            <span className="MuiSlider-track css-1t2bqnt" style={{ left: "0%", width: "100%" }}></span>
-                                                            <span data-index="0" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "0%" }}>
-                                                            </span>
-                                                            <span aria-hidden="true" data-index="0" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "0%" }}>0</span>
-                                                            <span data-index="1" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "11.1111%" }}>
-                                                            </span>
-                                                            <span aria-hidden="true" data-index="1" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "11.1111%" }}>1</span>
-                                                            <span data-index="2" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "22.2222%" }}></span>
-                                                            <span aria-hidden="true" data-index="2" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "22.2222%" }}>2</span>
-                                                            <span data-index="3" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "33.3333%" }}></span>
-                                                            <span aria-hidden="true" data-index="3" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "33.3333%" }}>3</span>
-                                                            <span data-index="4" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "44.4444%" }}></span>
-                                                            <span aria-hidden="true" data-index="4" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "44.4444%" }}>4</span>
-                                                            <span data-index="5" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "55.5556%" }}></span>
-                                                            <span aria-hidden="true" data-index="5" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "55.5556%" }}>5</span>
-                                                            <span data-index="6" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "66.6667%" }}></span>
-                                                            <span aria-hidden="true" data-index="6" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "66.6667%" }}>6</span>
-                                                            <span data-index="7" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "77.7778%" }}></span>
-                                                            <span aria-hidden="true" data-index="7" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "77.7778%" }}>7</span>
-                                                            <span data-index="8" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "88.8889%" }}></span>
-                                                            <span aria-hidden="true" data-index="8" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "88.8889%" }}>8</span>
-                                                            <span data-index="9" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "100%" }}></span>
-                                                            <span aria-hidden="true" data-index="9" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "100%" }}>9</span>
-                                                            <span data-index="0" className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium MuiSlider-thumb css-7drnjp" style={{ left: "0%", pointerEvents: "none" }}>
-                                                                <input aria-orientation="horizontal" aria-valuemax="9" aria-valuemin="0" type="range" min="0" max="9" step="1" data-index="0" aria-label="Minimum distance" aria-valuenow="0" aria-valuetext="0" value="0" style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", height: "100%", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", whiteSpace: "nowrap", width: "100%", direction: "ltr" }} />
-                                                                <span className="MuiSlider-valueLabel css-1s3sa3n" aria-hidden="true">
-                                                                    <span className="MuiSlider-valueLabelCircle">
-                                                                        <span className="MuiSlider-valueLabelLabel">0</span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                            <span data-index="1" className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium MuiSlider-thumb css-7drnjp" style={{ left: "100%", pointerEvents: "none" }}>
-                                                                <input aria-orientation="horizontal" aria-valuemax="9" aria-valuemin="0" type="range" min="0" max="9" step="1" data-index="1" aria-label="Minimum distance" aria-valuenow="9" aria-valuetext="9" value="9" style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", height: "100%", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", whiteSpace: "nowrap", width: "100%", direction: "ltr" }} />
-                                                                <span className="MuiSlider-valueLabel css-1s3sa3n" aria-hidden="true">
-                                                                    <span className="MuiSlider-valueLabelCircle">
-                                                                        <span className="MuiSlider-valueLabelLabel">9</span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    <div className="value-number">9</div>
-                                                </div>
+                                                <MultiRangeSlider
+                                                    min={0}
+                                                    max={10}
+                                                    // step={5}
+                                                    // ruler={true}
+                                                    label={true}
+                                                    // preventWheel={false}
+                                                    minValue={speedminValue}
+                                                    maxValue={speedmaxValue}
+                                                    onInput={(e) => {
+                                                        handleSpeed(e);
+                                                    }}
+                                                />
                                             </div>
                                             <div className="filterSlider">
                                                 <div className="slider-title">
@@ -557,55 +527,19 @@ const DrawerSiderbar = props => {
                                                     </span>
                                                     <span className='ml-2'>Strength</span>
                                                 </div>
-                                                <div className="slider-value">
-                                                    <div className="value-number">0</div>
-                                                    <div className="value-slider">
-                                                        <span label="true" className="MuiSlider-colorPrimary MuiSlider-sizeMedium MuiSlider-root MuiSlider-marked css-9cct2k">
-                                                            <span className="MuiSlider-rail css-b04pc9">
-                                                            </span>
-                                                            <span className="MuiSlider-track css-1t2bqnt" style={{ left: "0%", width: "100%" }}></span>
-                                                            <span data-index="0" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "0%" }}>
-                                                            </span>
-                                                            <span aria-hidden="true" data-index="0" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "0%" }}>0</span>
-                                                            <span data-index="1" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "11.1111%" }}>
-                                                            </span>
-                                                            <span aria-hidden="true" data-index="1" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "11.1111%" }}>1</span>
-                                                            <span data-index="2" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "22.2222%" }}></span>
-                                                            <span aria-hidden="true" data-index="2" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "22.2222%" }}>2</span>
-                                                            <span data-index="3" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "33.3333%" }}></span>
-                                                            <span aria-hidden="true" data-index="3" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "33.3333%" }}>3</span>
-                                                            <span data-index="4" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "44.4444%" }}></span>
-                                                            <span aria-hidden="true" data-index="4" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "44.4444%" }}>4</span>
-                                                            <span data-index="5" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "55.5556%" }}></span>
-                                                            <span aria-hidden="true" data-index="5" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "55.5556%" }}>5</span>
-                                                            <span data-index="6" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "66.6667%" }}></span>
-                                                            <span aria-hidden="true" data-index="6" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "66.6667%" }}>6</span>
-                                                            <span data-index="7" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "77.7778%" }}></span>
-                                                            <span aria-hidden="true" data-index="7" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "77.7778%" }}>7</span>
-                                                            <span data-index="8" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "88.8889%" }}></span>
-                                                            <span aria-hidden="true" data-index="8" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "88.8889%" }}>8</span>
-                                                            <span data-index="9" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "100%" }}></span>
-                                                            <span aria-hidden="true" data-index="9" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "100%" }}>9</span>
-                                                            <span data-index="0" className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium MuiSlider-thumb css-7drnjp" style={{ left: "0%", pointerEvents: "none" }}>
-                                                                <input aria-orientation="horizontal" aria-valuemax="9" aria-valuemin="0" type="range" min="0" max="9" step="1" data-index="0" aria-label="Minimum distance" aria-valuenow="0" aria-valuetext="0" value="0" style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", height: "100%", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", whiteSpace: "nowrap", width: "100%", direction: "ltr" }} />
-                                                                <span className="MuiSlider-valueLabel css-1s3sa3n" aria-hidden="true">
-                                                                    <span className="MuiSlider-valueLabelCircle">
-                                                                        <span className="MuiSlider-valueLabelLabel">0</span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                            <span data-index="1" className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium MuiSlider-thumb css-7drnjp" style={{ left: "100%", pointerEvents: "none" }}>
-                                                                <input aria-orientation="horizontal" aria-valuemax="9" aria-valuemin="0" type="range" min="0" max="9" step="1" data-index="1" aria-label="Minimum distance" aria-valuenow="9" aria-valuetext="9" value="9" style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", height: "100%", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", whiteSpace: "nowrap", width: "100%", direction: "ltr" }} />
-                                                                <span className="MuiSlider-valueLabel css-1s3sa3n" aria-hidden="true">
-                                                                    <span className="MuiSlider-valueLabelCircle">
-                                                                        <span className="MuiSlider-valueLabelLabel">9</span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    <div className="value-number">9</div>
-                                                </div>
+                                                <MultiRangeSlider
+                                                    min={0}
+                                                    max={10}
+                                                    // step={5}
+                                                    // ruler={true}
+                                                    label={true}
+                                                    // preventWheel={false}
+                                                    minValue={strengthminValue}
+                                                    maxValue={strengthmaxValue}
+                                                    onInput={(e) => {
+                                                        handleStrength(e);
+                                                    }}
+                                                />
                                             </div>
 
 
@@ -616,7 +550,20 @@ const DrawerSiderbar = props => {
                                                     </span>
                                                     <span className='ml-2'>Lightning</span>
                                                 </div>
-                                                <div className="slider-value">
+                                                <MultiRangeSlider
+                                                    min={0}
+                                                    max={10}
+                                                    // step={5}
+                                                    // ruler={true}
+                                                    label={true}
+                                                    // preventWheel={false}
+                                                    minValue={LightningminValue}
+                                                    maxValue={LightningmaxValue}
+                                                    onInput={(e) => {
+                                                        handleLightning(e);
+                                                    }}
+                                                />
+                                                {/* <div className="slider-value">
                                                     <div className="value-number">0</div>
                                                     <div className="value-slider">
                                                         <span label="true" className="MuiSlider-colorPrimary MuiSlider-sizeMedium MuiSlider-root MuiSlider-marked css-9cct2k">
@@ -664,7 +611,7 @@ const DrawerSiderbar = props => {
                                                         </span>
                                                     </div>
                                                     <div className="value-number">9</div>
-                                                </div>
+                                                </div> */}
                                             </div>
 
                                             <div className="filterSlider">
@@ -674,55 +621,19 @@ const DrawerSiderbar = props => {
                                                     </span>
                                                     <span className='ml-2'>Fire</span>
                                                 </div>
-                                                <div className="slider-value">
-                                                    <div className="value-number">0</div>
-                                                    <div className="value-slider">
-                                                        <span label="true" className="MuiSlider-colorPrimary MuiSlider-sizeMedium MuiSlider-root MuiSlider-marked css-9cct2k">
-                                                            <span className="MuiSlider-rail css-b04pc9">
-                                                            </span>
-                                                            <span className="MuiSlider-track css-1t2bqnt" style={{ left: "0%", width: "100%" }}></span>
-                                                            <span data-index="0" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "0%" }}>
-                                                            </span>
-                                                            <span aria-hidden="true" data-index="0" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "0%" }}>0</span>
-                                                            <span data-index="1" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "11.1111%" }}>
-                                                            </span>
-                                                            <span aria-hidden="true" data-index="1" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "11.1111%" }}>1</span>
-                                                            <span data-index="2" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "22.2222%" }}></span>
-                                                            <span aria-hidden="true" data-index="2" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "22.2222%" }}>2</span>
-                                                            <span data-index="3" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "33.3333%" }}></span>
-                                                            <span aria-hidden="true" data-index="3" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "33.3333%" }}>3</span>
-                                                            <span data-index="4" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "44.4444%" }}></span>
-                                                            <span aria-hidden="true" data-index="4" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "44.4444%" }}>4</span>
-                                                            <span data-index="5" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "55.5556%" }}></span>
-                                                            <span aria-hidden="true" data-index="5" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "55.5556%" }}>5</span>
-                                                            <span data-index="6" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "66.6667%" }}></span>
-                                                            <span aria-hidden="true" data-index="6" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "66.6667%" }}>6</span>
-                                                            <span data-index="7" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "77.7778%" }}></span>
-                                                            <span aria-hidden="true" data-index="7" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "77.7778%" }}>7</span>
-                                                            <span data-index="8" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "88.8889%" }}></span>
-                                                            <span aria-hidden="true" data-index="8" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "88.8889%" }}>8</span>
-                                                            <span data-index="9" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "100%" }}></span>
-                                                            <span aria-hidden="true" data-index="9" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "100%" }}>9</span>
-                                                            <span data-index="0" className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium MuiSlider-thumb css-7drnjp" style={{ left: "0%", pointerEvents: "none" }}>
-                                                                <input aria-orientation="horizontal" aria-valuemax="9" aria-valuemin="0" type="range" min="0" max="9" step="1" data-index="0" aria-label="Minimum distance" aria-valuenow="0" aria-valuetext="0" value="0" style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", height: "100%", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", whiteSpace: "nowrap", width: "100%", direction: "ltr" }} />
-                                                                <span className="MuiSlider-valueLabel css-1s3sa3n" aria-hidden="true">
-                                                                    <span className="MuiSlider-valueLabelCircle">
-                                                                        <span className="MuiSlider-valueLabelLabel">0</span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                            <span data-index="1" className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium MuiSlider-thumb css-7drnjp" style={{ left: "100%", pointerEvents: "none" }}>
-                                                                <input aria-orientation="horizontal" aria-valuemax="9" aria-valuemin="0" type="range" min="0" max="9" step="1" data-index="1" aria-label="Minimum distance" aria-valuenow="9" aria-valuetext="9" value="9" style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", height: "100%", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", whiteSpace: "nowrap", width: "100%", direction: "ltr" }} />
-                                                                <span className="MuiSlider-valueLabel css-1s3sa3n" aria-hidden="true">
-                                                                    <span className="MuiSlider-valueLabelCircle">
-                                                                        <span className="MuiSlider-valueLabelLabel">9</span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    <div className="value-number">9</div>
-                                                </div>
+                                                <MultiRangeSlider
+                                                    min={0}
+                                                    max={10}
+                                                    // step={5}
+                                                    // ruler={true}
+                                                    label={true}
+                                                    // preventWheel={false}
+                                                    minValue={fireminValue}
+                                                    maxValue={firemaxValue}
+                                                    onInput={(e) => {
+                                                        handleFire(e);
+                                                    }}
+                                                />
                                             </div>
 
                                             <div className="filterSlider">
@@ -732,55 +643,21 @@ const DrawerSiderbar = props => {
                                                     </span>
                                                     <span className='ml-2'>Water</span>
                                                 </div>
-                                                <div className="slider-value">
-                                                    <div className="value-number">0</div>
-                                                    <div className="value-slider">
-                                                        <span label="true" className="MuiSlider-colorPrimary MuiSlider-sizeMedium MuiSlider-root MuiSlider-marked css-9cct2k">
-                                                            <span className="MuiSlider-rail css-b04pc9">
-                                                            </span>
-                                                            <span className="MuiSlider-track css-1t2bqnt" style={{ left: "0%", width: "100%" }}></span>
-                                                            <span data-index="0" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "0%" }}>
-                                                            </span>
-                                                            <span aria-hidden="true" data-index="0" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "0%" }}>0</span>
-                                                            <span data-index="1" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "11.1111%" }}>
-                                                            </span>
-                                                            <span aria-hidden="true" data-index="1" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "11.1111%" }}>1</span>
-                                                            <span data-index="2" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "22.2222%" }}></span>
-                                                            <span aria-hidden="true" data-index="2" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "22.2222%" }}>2</span>
-                                                            <span data-index="3" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "33.3333%" }}></span>
-                                                            <span aria-hidden="true" data-index="3" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "33.3333%" }}>3</span>
-                                                            <span data-index="4" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "44.4444%" }}></span>
-                                                            <span aria-hidden="true" data-index="4" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "44.4444%" }}>4</span>
-                                                            <span data-index="5" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "55.5556%" }}></span>
-                                                            <span aria-hidden="true" data-index="5" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "55.5556%" }}>5</span>
-                                                            <span data-index="6" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "66.6667%" }}></span>
-                                                            <span aria-hidden="true" data-index="6" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "66.6667%" }}>6</span>
-                                                            <span data-index="7" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "77.7778%" }}></span>
-                                                            <span aria-hidden="true" data-index="7" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "77.7778%" }}>7</span>
-                                                            <span data-index="8" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "88.8889%" }}></span>
-                                                            <span aria-hidden="true" data-index="8" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "88.8889%" }}>8</span>
-                                                            <span data-index="9" className="MuiSlider-mark MuiSlider-markActive css-17lmo96" style={{ left: "100%" }}></span>
-                                                            <span aria-hidden="true" data-index="9" className="MuiSlider-markLabel MuiSlider-markLabelActive css-sxo8tj" style={{ left: "100%" }}>9</span>
-                                                            <span data-index="0" className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium MuiSlider-thumb css-7drnjp" style={{ left: "0%", pointerEvents: "none" }}>
-                                                                <input aria-orientation="horizontal" aria-valuemax="9" aria-valuemin="0" type="range" min="0" max="9" step="1" data-index="0" aria-label="Minimum distance" aria-valuenow="0" aria-valuetext="0" value="0" style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", height: "100%", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", whiteSpace: "nowrap", width: "100%", direction: "ltr" }} />
-                                                                <span className="MuiSlider-valueLabel css-1s3sa3n" aria-hidden="true">
-                                                                    <span className="MuiSlider-valueLabelCircle">
-                                                                        <span className="MuiSlider-valueLabelLabel">0</span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                            <span data-index="1" className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium MuiSlider-thumb css-7drnjp" style={{ left: "100%", pointerEvents: "none" }}>
-                                                                <input aria-orientation="horizontal" aria-valuemax="9" aria-valuemin="0" type="range" min="0" max="9" step="1" data-index="1" aria-label="Minimum distance" aria-valuenow="9" aria-valuetext="9" value="9" style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", height: "100%", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", whiteSpace: "nowrap", width: "100%", direction: "ltr" }} />
-                                                                <span className="MuiSlider-valueLabel css-1s3sa3n" aria-hidden="true">
-                                                                    <span className="MuiSlider-valueLabelCircle">
-                                                                        <span className="MuiSlider-valueLabelLabel">9</span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    <div className="value-number">9</div>
-                                                </div>
+                                                
+                                                <MultiRangeSlider
+                                                    min={0}
+                                                    max={10}
+                                                    // step={5}
+                                                    // ruler={true}
+                                                    label={true}
+                                                    // preventWheel={false}
+                                                    minValue={waterminValue}
+                                                    maxValue={watermaxValue}
+                                                    onInput={(e) => {
+                                                        handleWater(e);
+                                                    }}
+                                                />
+                                                
                                             </div>
 
                                             <div className="filterSlider">
@@ -790,7 +667,20 @@ const DrawerSiderbar = props => {
                                                     </span>
                                                     <span className='ml-2'>Wind</span>
                                                 </div>
-                                                <div className="slider-value">
+                                                <MultiRangeSlider
+                                                    min={0}
+                                                    max={10}
+                                                    // step={5}
+                                                    // ruler={true}
+                                                    label={true}
+                                                    // preventWheel={false}
+                                                    minValue={windminValue}
+                                                    maxValue={windmaxValue}
+                                                    onInput={(e) => {
+                                                        handleWind(e);
+                                                    }}
+                                                />
+                                                {/* <div className="slider-value">
                                                     <div className="value-number">0</div>
                                                     <div className="value-slider">
                                                         <span label="true" className="MuiSlider-colorPrimary MuiSlider-sizeMedium MuiSlider-root MuiSlider-marked css-9cct2k">
@@ -838,7 +728,7 @@ const DrawerSiderbar = props => {
                                                         </span>
                                                     </div>
                                                     <div className="value-number">9</div>
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                     </div>
@@ -886,18 +776,11 @@ const DrawerSiderbar = props => {
                 <Main open={open} className="main_div_all">
                     <SideBar_MP />
                     <Search_menu />
-                    {/* <Auctions_NFT/> */}
-                    {/* <Buy_nft /> */}
-
+                  
                     <Routes>
-                        
+
                         <Route exact path="/" element={<Buy_nft />} />
-                        {/* <Route exact path="/Auctions_NFT" element={<Auctions_NFT />} /> */}
-                        {/* <Route exact path="/NFT_Buy" element={<NFT_Buy />} /> */}
-                        {/* <Route exact path="/" element={<Buy_nft />} /> */}
-
-                        {/* <Route exact path="/Biding/:id" element={<Biding_NFT />} /> */}
-
+                       
                     </Routes>
                     <Outlet />
 
