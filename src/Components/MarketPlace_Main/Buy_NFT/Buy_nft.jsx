@@ -15,7 +15,7 @@ export default function Buy_nft() {
     const Fatch_Api_data = async () => {
         try {
             let res = await axios.get("https://whenftapi.herokuapp.com/sell_marketplace_history?id=100")
-            console.log("res", res.data.data);
+            console.log("res", res.data.data.length);
             res = res.data.data
             console.log("res", res.bidEndTime);
             setapiData(res)

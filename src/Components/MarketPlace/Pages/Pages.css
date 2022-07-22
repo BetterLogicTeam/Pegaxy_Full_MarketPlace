@@ -1,0 +1,11 @@
+
+.bx-view{
+    /* z-index: 0 !important; */
+}
+
+
+@media screen and (max-width:992px) {
+    .dropdown-filter{
+        margin-top: 1rem !important;
+    } 
+}
