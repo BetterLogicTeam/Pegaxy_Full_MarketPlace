@@ -17,8 +17,10 @@ import Biding_NFT from './Components/MarketPlace_Main/Biding_NFT/Biding_NFT';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Buy_nft from './Components/MarketPlace_Main/Buy_NFT/Buy_nft';
+
 import {useSelector} from 'react-redux'
 import Buy_Auction from './Components/MarketPlace_Main/Buy_And_Auction/Buy_Auction';
+
 
 function App() {
   const {data} = useSelector(state=> state.fetchCategory);
@@ -38,7 +40,9 @@ function App() {
           <Route exact path="/dashboard/Auctions_NFT" element={<Auctions_NFT />} /> 
           {/* <Route exact path="/Auctions_NFT" element={<Auctions_NFT />} /> */}
           <Route exact path="/dashboard/Buy_nft" element={<Buy_nft />} />
+
           <Route exact path="/dashboard/Buy_Auction" element={<Buy_Auction />} />
+
 
 
 

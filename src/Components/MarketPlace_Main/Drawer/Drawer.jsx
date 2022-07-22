@@ -117,10 +117,26 @@ const DrawerSiderbar = props => {
     const [breedminValue, set_Breed_minValue] = React.useState(0);
     const [breedmaxValue, set_Breed_maxValue] = React.useState(10);
 
+    const [strengthmaxValue,set_Strength_maxValue] = React.useState(10);
+    const [LightningminValue, set_Lightning_minValue] = React.useState(0);
+    const [LightningmaxValue,set_Lightning_maxValue] = React.useState(10);
+    const [fireminValue, set_Fire_minValue] = React.useState(0);
+    const [firemaxValue,set_Fire_maxValue] = React.useState(10);
+    const [waterminValue, set_Water_minValue] = React.useState(0);
+    const [watermaxValue,set_Water_maxValue] = React.useState(10);
+    const [windminValue, set_Wind_minValue] = React.useState(0);
+    const [windmaxValue,set_Wind_maxValue] = React.useState(10);
+    const [breedminValue, set_Breed_minValue] = React.useState(0);
+    const [breedmaxValue,set_Breed_maxValue] = React.useState(10);
+
+
 
     const handleSpeed = (e) => {
         set_Speed_minValue(e.minValue);
         set_Speed_maxValue(e.maxValue);
+
+        set_Speed_maxValue(e.maxValue); 
+
 
     };
     const handleStrength = (e) => {
@@ -176,6 +192,13 @@ const DrawerSiderbar = props => {
         { name: 'auction', isChecked: false, lable: "Auction" }
     ]
 
+        navigate("/dashboard/Auctions_NFT")
+    }
+    function buynavigation() {
+        navigate("/dashboard/Buy_nft")
+    }
+
+
     function buynavigation(e, i) {
         let { checked, name } = e.target;
         options = [...options, options[i].isChecked = !options[i].isChecked]
@@ -230,6 +253,9 @@ const DrawerSiderbar = props => {
 
                 <Drawer
                     // transitionDuration={1000}
+
+                // transitionDuration={1000}
+
                     sx={{
                         width: drawerWidth,
                         flexShrink: 0,
@@ -243,6 +269,9 @@ const DrawerSiderbar = props => {
                     }}
                     variant="persistent"
                     role="presentation"
+
+
+                    
 
                     anchor="left"
                     open={open}
@@ -308,6 +337,12 @@ const DrawerSiderbar = props => {
 
                                                 {/* <div className="item-filter">
                                                     <label onClick={() => { auctionnavigation() }} className="formCheck">Auction<input type="checkbox" />
+
+                                                <div className="item-filter">
+                                                    {/* <Link to="/"> */}
+
+                                                    <label onClick={() => { buynavigation() }} className="formCheck">Buy now<input type="checkbox" />
+
                                                         <span className="checkmark">
                                                         </span>
                                                     </label>
@@ -315,6 +350,19 @@ const DrawerSiderbar = props => {
                                                     <span>
                                                     </span>
                                                 </div> */}
+
+                                                </div>
+                                                <div className="item-filter">
+                                                    {/* <Link to="/Auctions_NFT"> */}
+                                                    <label onClick={() => { auctionnavigation() }} className="formCheck">Auction<input type="checkbox" />
+                                                        <span className="checkmark">
+                                                        </span>
+                                                    </label>
+                                                    {/* </Link> */}
+                                                    <span>
+                                                    </span>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -518,6 +566,10 @@ const DrawerSiderbar = props => {
                                             <div className="filterSlider">
                                                 <MultiRangeSlider
                                                     tooltip={true}
+
+                                            <MultiRangeSlider
+                                            tooltip={true}
+
                                                     min={0}
                                                     max={10}
                                                     step={1}
@@ -687,6 +739,9 @@ const DrawerSiderbar = props => {
                                                     <span className='ml-2'>Water</span>
                                                 </div>
 
+
+                                                
+
                                                 <MultiRangeSlider
                                                     min={0}
                                                     max={10}
@@ -700,6 +755,9 @@ const DrawerSiderbar = props => {
                                                         handleWater(e);
                                                     }}
                                                 />
+
+
+                                                
 
                                             </div>
 
@@ -822,10 +880,21 @@ const DrawerSiderbar = props => {
 
                     <Routes>
 
+                  
+                    <Routes>
+
+                        <Route exact path="/" element={<Buy_nft />} />
+                       
+                    </Routes>
+                    <Outlet />
+
+
                         <Route exact path="/" element={<Buy_Auction />} />
 
                     </Routes>
                     <Outlet />
+
+
 
 
 
