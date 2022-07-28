@@ -1,0 +1,52 @@
+.img_model_icon{
+  cursor: pointer;
+}
+.div_sell_image{
+    display: flex;
+    justify-content: center;
+}
+.sel_section{
+    padding-top: 90px !important;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: white;
+  }
+  .btn_in_sell{
+      /* width: 100%; */
+  }
+  .main_div_btn{
+     margin-left: 2rem;
+  }
+  .main_div_btn_model{
+    margin-left: 1rem;
+    /* width: 22rem !important; */
+  }
+
+  .sell_input{
+    margin-left: 1rem !important;
+    width: 20rem !important;
+  }
+
+  .span_main{
+    position: absolute;
+    top: 20%;
+    right: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1 !important;
+
+  }
+
+  .viewAlert{
+    z-index: 0 !important;
+  }
