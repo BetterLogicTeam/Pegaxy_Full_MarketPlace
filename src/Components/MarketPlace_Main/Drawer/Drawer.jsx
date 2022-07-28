@@ -1,5 +1,6 @@
 
 import * as React from 'react';
+import { useState } from 'react'
 import { styled, useTheme } from '@mui/material/styles';
 import './Drawer_style.css'
 // import MultiRangeSlider from "multi-range-slider-react";
@@ -43,9 +44,12 @@ import NFT_Buy from '../Buy_NFT/Buy_nft';
 
 
 import SideBar_MP from '../SideBar_MP/SideBar_MP';
+import Buy_Auction from '../Buy_And_Auction/Buy_Auction';
 
-
-
+// redux
+import {useDispatch} from 'react-redux'
+// action
+import {fetchAuctionBuyData} from "../../../store/slices/auctionBuyData"
 const drawerWidth = 250;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -95,27 +99,28 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const DrawerSiderbar = props => {
     let navigate = useNavigate();
+
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
     const [speedminValue, set_Speed_minValue] = React.useState(0);
     const [speedmaxValue, set_Speed_maxValue] = React.useState(10);
     const [strengthminValue, set_Strength_minValue] = React.useState(0);
-    const [strengthmaxValue,set_Strength_maxValue] = React.useState(10);
+    const [strengthmaxValue, set_Strength_maxValue] = React.useState(10);
     const [LightningminValue, set_Lightning_minValue] = React.useState(0);
-    const [LightningmaxValue,set_Lightning_maxValue] = React.useState(10);
+    const [LightningmaxValue, set_Lightning_maxValue] = React.useState(10);
     const [fireminValue, set_Fire_minValue] = React.useState(0);
-    const [firemaxValue,set_Fire_maxValue] = React.useState(10);
+    const [firemaxValue, set_Fire_maxValue] = React.useState(10);
     const [waterminValue, set_Water_minValue] = React.useState(0);
-    const [watermaxValue,set_Water_maxValue] = React.useState(10);
+    const [watermaxValue, set_Water_maxValue] = React.useState(10);
     const [windminValue, set_Wind_minValue] = React.useState(0);
-    const [windmaxValue,set_Wind_maxValue] = React.useState(10);
+    const [windmaxValue, set_Wind_maxValue] = React.useState(10);
     const [breedminValue, set_Breed_minValue] = React.useState(0);
-    const [breedmaxValue,set_Breed_maxValue] = React.useState(10);
+    const [breedmaxValue, set_Breed_maxValue] = React.useState(10);
 
 
     const handleSpeed = (e) => {
         set_Speed_minValue(e.minValue);
-        set_Speed_maxValue(e.maxValue); 
+        set_Speed_maxValue(e.maxValue);
 
     };
     const handleStrength = (e) => {
@@ -163,12 +168,36 @@ const DrawerSiderbar = props => {
     };
 
     function auctionnavigation() {
-        navigate("/dashboard/Auctions_NFT")
+        // navigate("/dashboard/Auctions_NFT")
     }
-    function buynavigation() {
-        navigate("/dashboard/Buy_nft")
-    }
+    const dispatch = useDispatch()
+    let options = [
+        { name: 'buyNow', isChecked: false, lable: "Buy Now" },
+        { name: 'auction', isChecked: false, lable: "Auction" }
+    ]
 
+    function buynavigation(e, i) {
+        let { checked, name } = e.target;
+        options = [...options, options[i].isChecked = !options[i].isChecked]
+        if (options[0].isChecked && options[1].isChecked) {    
+            dispatch(fetchAuctionBuyData("all"))
+        } else if (!options[0].isChecked && !options[1].isChecked) {
+           
+            dispatch(fetchAuctionBuyData("all"))
+        } else if (options[i].isChecked && options[i].name == "buyNow") {
+            
+            dispatch(fetchAuctionBuyData(options[i].name))
+        } else if (options[i].isChecked && options[i].name == "auction") {
+            
+            dispatch(fetchAuctionBuyData(options[i].name))
+        } else if (!options[i].isChecked && options[i].name == "auction") {
+            
+            dispatch(fetchAuctionBuyData("buyNow"))
+        } else if (!options[i].isChecked && options[i].name == "buyNow") {
+            
+            dispatch(fetchAuctionBuyData("auction"))
+        }
+    }
 
     return (
         <>
@@ -200,7 +229,7 @@ const DrawerSiderbar = props => {
 
 
                 <Drawer
-                // transitionDuration={1000}
+                    // transitionDuration={1000}
                     sx={{
                         width: drawerWidth,
                         flexShrink: 0,
@@ -214,7 +243,7 @@ const DrawerSiderbar = props => {
                     }}
                     variant="persistent"
                     role="presentation"
-                    
+
                     anchor="left"
                     open={open}
                     className="drawer_main"
@@ -251,27 +280,41 @@ const DrawerSiderbar = props => {
                                     <div id="collapseOne" className="accordion-collapse collapse show mt-2" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                         <div className="accordion-body">
                                             <div className="filterCheck">
-                                                <div className="item-filter">
-                                                    {/* <Link to="/"> */}
+                                                {
+                                                    options.map((opt, index) => {
+                                                        return <>
+                                                            <div className="item-filter">
 
-                                                    <label onClick={() => { buynavigation() }} className="formCheck">Buy now<input type="checkbox" />
-                                                        <span className="checkmark">
-                                                        </span>
-                                                    </label>
-                                                    {/* </Link> */}
-                                                    <span>
-                                                    </span>
-                                                </div>
-                                                <div className="item-filter">
-                                                    {/* <Link to="/Auctions_NFT"> */}
+
+                                                                <label className="formCheck">{opt.lable}<input
+                                                                    name={opt.name}
+                                                                    onChange={(e) => {
+
+                                                                        buynavigation(e, index)
+
+                                                                        // opt.isChecked = !opt.isChecked;
+                                                                    }}
+                                                                    type="checkbox" />
+                                                                    <span className="checkmark">
+                                                                    </span>
+                                                                </label>
+
+                                                                <span>
+                                                                </span>
+                                                            </div>
+                                                        </>
+                                                    })
+                                                }
+
+                                                {/* <div className="item-filter">
                                                     <label onClick={() => { auctionnavigation() }} className="formCheck">Auction<input type="checkbox" />
                                                         <span className="checkmark">
                                                         </span>
                                                     </label>
-                                                    {/* </Link> */}
+                                                  
                                                     <span>
                                                     </span>
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                     </div>
@@ -473,8 +516,8 @@ const DrawerSiderbar = props => {
                                     <div className="accordion-collapse collapse show">
                                         <div className="accordion-body">
                                             <div className="filterSlider">
-                                            <MultiRangeSlider
-                                            tooltip={true}
+                                                <MultiRangeSlider
+                                                    tooltip={true}
                                                     min={0}
                                                     max={10}
                                                     step={1}
@@ -643,7 +686,7 @@ const DrawerSiderbar = props => {
                                                     </span>
                                                     <span className='ml-2'>Water</span>
                                                 </div>
-                                                
+
                                                 <MultiRangeSlider
                                                     min={0}
                                                     max={10}
@@ -657,7 +700,7 @@ const DrawerSiderbar = props => {
                                                         handleWater(e);
                                                     }}
                                                 />
-                                                
+
                                             </div>
 
                                             <div className="filterSlider">
@@ -776,11 +819,11 @@ const DrawerSiderbar = props => {
                 <Main open={open} className="main_div_all">
                     <SideBar_MP />
                     <Search_menu />
-                  
+
                     <Routes>
 
-                        <Route exact path="/" element={<Buy_nft />} />
-                       
+                        <Route exact path="/" element={<Buy_Auction />} />
+
                     </Routes>
                     <Outlet />
 

@@ -4,9 +4,10 @@ import {BsArrowClockwise} from 'react-icons/bs'
 import {FaSearch} from 'react-icons/fa'
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
-
+import {useSelector} from 'react-redux'
 
 export default function Search_menu() {
+    const {buyAuctionData} = useSelector(state=> state.buyAuction);
     const [show, setShow] = React.useState(false);
 
     const handleClose = () => setShow(false);
@@ -19,7 +20,7 @@ export default function Search_menu() {
                         <div className="action-btn text-white " onClick={() => window.location.reload()}>
                            <BsArrowClockwise className='icon_arrow'/>
                         </div>
-                        <span className="action-name">5,656 Items</span>
+                        <span className="action-name">{buyAuctionData.length} Items</span>
                     </div>
                     <div className="">
                         <button type="button" className=" filterbtntt btn btn-outline-primary"  onClick={handleShow}>Filter</button>
