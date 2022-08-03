@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect}from 'react'
 import './NFT_Buy_Style.css'
 import { BsHeartFill } from 'react-icons/bs'
 import { IoIosFlash } from 'react-icons/io'
@@ -7,10 +7,214 @@ import { BsArrowClockwise } from 'react-icons/bs'
 import { BsShareFill } from 'react-icons/bs'
 import {GiTireIronCross} from 'react-icons/gi'
 import Modal from 'react-bootstrap/Modal';
+import {  useDispatch } from 'react-redux'
+import { toast } from 'react-toast'
+import axios from 'axios'
+import { useNavigate} from 'react-router-dom'
 
-
+import {nftMarketContractAddress_Abi,nftMarketContractAddress} from '../../../utils/contract'
+import {loadWeb3}from '../../apis/api'
+import {
+  BrowserRouter as Router,useParams
+} from "react-router-dom";
 export default function NFT_Buy() {
   const [modalShow, setModalShow] = React.useState(false);
+  const [IsSpinner, setIsSpinner] = React.useState(false);
+  const [nftcontractadd, Setnftcontractadd] = React.useState();
+  const [itemId, SetItemId] = React.useState();
+  const [tokenId, Settokenid] = React.useState();
+
+  const [nftprice, Setnftprice] = React.useState();
+  const [sellerAdress, SetsellerAdress] = React.useState();
+  const [nftname, Setnftname] = React.useState();
+  const navigate = useNavigate();
+  let { id } = useParams();
+
+// console.log('what is param adress',id)
+
+
+
+
+//  const dispatch = useDispatch()
+    // const [waiting, setWaiting] = useState(false)
+
+    // const [apiData, setapiData] = useState()
+
+    // let History =useNavigate()
+
+    const Fatch_Api_data = async () => {
+        try {
+            // setWaiting(true)
+            // const web3 = window.web3;
+
+            let res = await axios.get("https://pegaxy-openmarket.herokuapp.com/sell_marketplace_history?id=100")
+            console.log("what is response inside NFT_BUT", res.data.data[id]);
+            Setnftcontractadd(res.data.data[id].nftContract)
+            // Setnftcontractadd('0x84D1c1F7b33c70eaDCf9f8B29140A18AeC389fCB')
+
+            SetItemId(res.data.data[id].itemId)
+            Settokenid(res.data.data[id].tokenId)
+
+            
+            let price_nft=res?.data?.data[id]?.price
+            // price_nft=web3?.utils?.fromWei((price_nft))
+            Setnftprice(price_nft)
+            //  web3?.utils?.fromWei(nftprice)
+
+              SetsellerAdress(res.data.data[id].owner)
+            // SetsellerAdress(Adress.substr(0, 5)+"..."+Adress.substr(Adress.length-5,5))
+            Setnftname(res.data.data[id].name)
+
+            // res = res.data.data[0]
+
+            // console.log("res", res.bidEndTime);
+            // setapiData(res)
+            // setWaiting(false)
+
+            // dispatch(auctiontotalitems(res.length))
+
+        } catch (e) {
+            console.log("Error while fatching API ", e);
+        }
+    }
+    console.log('what is adress',nftcontractadd)
+
+    const BuyNow = async () => {
+        let acc = await loadWeb3();
+        // setIsSpinner(true)
+        if (acc == "No Wallet") {
+          toast.error("No Wallet Connected")
+          // setIsSpinner(false)
+    
+        }
+        else if (acc == "Wrong Network") {
+          toast.error("Wrong Newtwork please connect to test net")
+          // setIsSpinner(false)
+    
+        } else {
+          try {
+            // setIsSpinner(true)
+    
+            if (sellerAdress === acc) {
+              toast.error("Already owned")
+              // setIsSpinner(false)
+    
+            }
+            else {
+              // setIsSpinner(true)
+              alert('WHAT IS ALERT')
+    
+              const web3 = window.web3;
+              let nftContractOftoken = new web3.eth.Contract(nftMarketContractAddress_Abi, nftMarketContractAddress);
+              // console.log("nft_price", nftprice);
+              // let inputdata = web3?.utils?.fromWei((nftprice).toString())
+              
+    
+              await nftContractOftoken.methods.createMarketSale(itemId,nftcontractadd).send({
+                from: acc,
+                value: (nftprice).toString()
+              
+    
+              }
+              );
+    
+              let postapiPushdata = await axios.post('https://pegaxy-openmarket.herokuapp.com/update_sell_status', {
+    
+                "tokenid": tokenId,
+    
+    
+              })
+    
+    
+    
+              console.log("postapiPushdata", postapiPushdata);
+              toast.success("Transion Compelete")
+              setIsSpinner(false)
+              // history.push("/");
+    
+            }
+    
+    
+          }
+          catch (e) {
+            console.log("Error while addOrder ", e)
+            setIsSpinner(false)
+    
+          }
+        }
+    
+      }
+
+      // const BuyNow= async()=>{
+      //   let acc = await loadWeb3();
+      //   setIsSpinner(true)
+      //   if (acc == "No Wallet") {
+      //     toast.error("No Wallet Connected")
+      //     setIsSpinner(false)
+    
+      //   }
+      //   else if (acc == "Wrong Network") {
+      //     toast.error("Wrong Newtwork please connect to test net")
+      //     setIsSpinner(false)
+    
+      //   } else {
+      //     try {
+      //       setIsSpinner(true)
+    
+      //       if (seller_add === acc) {
+      //         toast.error("Already owned")
+      //         setIsSpinner(false)
+    
+      //       }
+      //       else {
+      //         setIsSpinner(true)
+    
+      //         const web3 = window.web3;
+      //         let nftContractOftoken = new web3.eth.Contract(nftMarketContractAddress_Abi, nftMarketContractAddress);
+      //         // console.log("nft_price", nftprice);
+      //         let inputdata = web3?.utils?.toWei((nftprice).toString())
+      //         // console.log("inputdata", inputdata);
+    
+      //         await nftContractOftoken.methods.createMarketSale(tokenId, nftcontractadd).send({
+      //           from: acc,
+      //           value: (inputdata).toString()
+      //           // value:(web3.utils.toWei(nftprice)).tostring()
+      //           // value:(1).toString()
+    
+      //         }
+      //         );
+    
+      //         let postapiPushdata = await axios.post('https://openmarket-nft.herokuapp.com/update_sell_status', {
+    
+      //           "tokenid": tokenid_here,
+    
+    
+      //         })
+    
+    
+    
+      //         console.log("postapiPushdata", postapiPushdata);
+      //         toast.success("Transion Compelete")
+      //         setIsSpinner(false)
+      //         history.push("/");
+    
+      //       }
+    
+    
+      //     }
+      //     catch (e) {
+      //       console.log("Error while addOrder ", e)
+      //       setIsSpinner(false)
+    
+      //     }
+      //   }
+      // }
+
+
+    useEffect(() => {
+        Fatch_Api_data()
+    }, []);
+
   return (
     <div>
       <Modal
@@ -84,7 +288,7 @@ export default function NFT_Buy() {
                   <span style={{ boxSizing: "border-box", display: "inline-block", overflow: "hidden", width: "16px", height: "16px", background: "none", opacity: "1", border: "0px", margin: "0px", padding: " 0px", position: "relative" }}>
                     <img alt="Back" src="https://cdn.pegaxy.io/statics/marketplace/public/v3/images/ic_back.png" decoding="async" data-nimg="fixed" style={{ position: "absolute", inset: "0px", boxSizing: "border-box", padding: "0px", border: "none", margin: "auto", display: "block", width: "0px", height: "0px", minWidth: "100%", maxWidth: "100%", minHeight: "100%", maxHeight: "100%" }} />
                   </span>
-                  <span className='text-white'>BACK</span>
+                  <span className='text-white' onClick={() => navigate(-1)}>BACK</span>
                 </div>
               </div>
               <div className='bxDetail'>
@@ -117,7 +321,7 @@ export default function NFT_Buy() {
                     <div className="meta">
                       <div className="meta-left">
                         <div className="status sale text-white">For Sale</div>
-                        <a target="_blank" rel="noreferrer noopener" href="https://polygonscan.com/token/0xD50D167DD35D256e19E2FB76d6b9Bf9F4c571A3E?a=954546" className="id text-white">#954546</a>
+                        <a target="_blank" rel="noreferrer noopener" href="https://polygonscan.com/token/0xD50D167DD35D256e19E2FB76d6b9Bf9F4c571A3E?a=954546" className="id text-white">{itemId}</a>
                       </div>
                       <div className="meta-right text-white">
                         <div className="action-btn action-reload">
@@ -130,7 +334,7 @@ export default function NFT_Buy() {
                     </div>
                     <div className="title">
                       <h1>
-                        <a target="_blank" rel="noreferrer noopener" href="https://polygonscan.com/token/0xD50D167DD35D256e19E2FB76d6b9Bf9F4c571A3E?a=954546" className="id">Oni i My</a>
+                        <a target="_blank" rel="noreferrer noopener" href="https://polygonscan.com/token/0xD50D167DD35D256e19E2FB76d6b9Bf9F4c571A3E?a=954546" className="id">{nftname}</a>
                       </h1>
                     </div>
                     <div className="properties">
@@ -156,7 +360,7 @@ export default function NFT_Buy() {
                       </div>
                       <div className="owner text-white">
                         <span>Owner: </span>
-                        0x57cCC...3856A
+                        {sellerAdress}
                       </div>
                     </div>
                   </div>
@@ -168,12 +372,12 @@ export default function NFT_Buy() {
                       <span style={{ boxSizing: "border-box", display: "inline-block", overflow: "hidden", width: "16px", height: "16px", background: "none", opacity: "1", border: "0px", margin: "0px", padding: " 0px", position: "relative" }}>
                         <img alt="USDT" src="https://cdn.pegaxy.io/statics/marketplace/public/v3/images/symbol/usdt.png" decoding="async" data-nimg="fixed" style={{ position: "absolute", inset: "0px", boxSizing: "border-box", padding: "0px", border: "none", margin: "auto", display: "block", width: "0px", height: "0px", minWidth: "100%", maxWidth: "100%", minHeight: "100%", maxHeight: "100%" }} />
                       </span>
-                      <span className="value">3.22</span>
-                      <span className="sub">($3.22)</span>
+                      <span className="value">{nftprice}</span>
+                      <span className="sub">${nftprice}</span>
                     </div>
                     <div className="price-button mt-3">
                       <button type="button" className="ps-5 pe-5 animated-button btn btn-primary">
-                        <span className='fw-1 ' onClick={() => setModalShow(true)}>Buy Now</span>
+                        <span className='fw-1 ' onClick={() => BuyNow()}>Buy Now</span>
                       </button>
                     </div>
                   </div>

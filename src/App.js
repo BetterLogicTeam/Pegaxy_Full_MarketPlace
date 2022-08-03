@@ -17,19 +17,9 @@ import Biding_NFT from './Components/MarketPlace_Main/Biding_NFT/Biding_NFT';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Buy_nft from './Components/MarketPlace_Main/Buy_NFT/Buy_nft';
-<<<<<<< HEAD
-import {useSelector} from 'react-redux'
-import Buy_Auction from './Components/MarketPlace_Main/Buy_And_Auction/Buy_Auction';
-=======
 
-import {useSelector} from 'react-redux'
-import Buy_Auction from './Components/MarketPlace_Main/Buy_And_Auction/Buy_Auction';
-
->>>>>>> e93e2e0675b4f354f481205fea394ffb5f4a5e96
 
 function App() {
-  const {data} = useSelector(state=> state.fetchCategory);
-  console.log("data", data)
   return (
     <div className="App">
 
@@ -42,20 +32,14 @@ function App() {
       <Routes>
 
         <Route exact path="/" element={<Drawer />} >
-          <Route exact path="/dashboard/Auctions_NFT" element={<Auctions_NFT />} /> 
+          {/* <Route exact path="/dashboard/Auctions_NFT" element={<Auctions_NFT />} />  */}
           {/* <Route exact path="/Auctions_NFT" element={<Auctions_NFT />} /> */}
-          <Route exact path="/dashboard/Buy_nft" element={<Buy_nft />} />
-          <Route exact path="/dashboard/Buy_Auction" element={<Buy_Auction />} />
-
-
-          <Route exact path="/dashboard/Buy_Auction" element={<Buy_Auction />} />
-
-
+          {/* <Route exact path="/dashboard/Buy_nft/" element={<Buy_nft />} /> */}
 
 
 
         </Route>
-        <Route exact path="/NFT_Buy" element={<NFT_Buy />} />
+        <Route exact path="/NFT_Buy/:id" element={<NFT_Buy />} />
 
         <Route exact path="/Biding/:id" element={<Biding_NFT />} />
 

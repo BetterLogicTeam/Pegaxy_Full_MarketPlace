@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './Auctions_style.css'
+import '../Auction_NFT/Auctions_style.css'
 import { BsHeartFill } from 'react-icons/bs'
 import { IoIosFlash } from 'react-icons/io'
 import { FaMarsStroke } from 'react-icons/fa'
@@ -8,10 +8,10 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { loadWeb3 } from '../../apis/api'
 import { nftMarketContractAddress, nftMarketContractAddress_Abi } from '../../utilies/Contract'
-import TimeCard from "./TimeCard"
+import TimeCard from "../Auction_NFT/TimeCard"
 import { auctiontotalitems } from '../../feature/total_items/Totelitemsslice'
 import Search_menu from '../MarketPlace_Header_search/Search_menu'
-export default function Auctions_NFT() {
+export default function All_NFT() {
     const dispatch = useDispatch()
     let navigate = useNavigate()
     const [apiData, setapiData] = useState()
@@ -35,6 +35,8 @@ export default function Auctions_NFT() {
 
     const lenght = useSelector((state) => state.Totalitemsslice.value)
 
+
+
     let alldata_here
 
 
@@ -42,8 +44,8 @@ export default function Auctions_NFT() {
         
         try {
             setWaiting(true)
-            let res = await axios.get("https://pegaxy-openmarket.herokuapp.com/OnAuction_marketplace_history?id=100")
-            // console.log("res", res.data.data);
+            let res = await axios.get("https://pegaxy-openmarket.herokuapp.com/nft_market_history?id=100")
+            console.log("what is all data respose", res);
             res = res.data.data
             if (res.lenght===0) {
                 setCondationaldata('No Item')
@@ -69,7 +71,7 @@ export default function Auctions_NFT() {
     const getTime = async () => {
         try {
             let res = await axios.get(
-                `https://pegaxy-openmarket.herokuapp.com/OnAuction_marketplace_history?id=100`
+                "https://pegaxy-openmarket.herokuapp.com/nft_market_history?id=100"
             );
             res = res.data.data
             console.log("what is in result ", res);
@@ -120,95 +122,95 @@ export default function Auctions_NFT() {
 
     }
 
-    const auction = async () => {
-        const web3 = window.web3;
-        let acc = loadWeb3()
+    // const auction = async () => {
+    //     const web3 = window.web3;
+    //     let acc = loadWeb3()
 
 
 
-        let res = await axios.get(
-            `https://whenftapi.herokuapp.com/OnAuction_marketplace_history?id=100`
-        );
+    //     let res = await axios.get(
+    //         `https://whenftapi.herokuapp.com/OnAuction_marketplace_history?id=100`
+    //     );
 
-        let response_here = res.data.data
-        console.log("data_all", response_here);
-        response_here = response_here.url
-        setResonse(response_here)
+    //     let response_here = res.data.data
+    //     console.log("data_all", response_here);
+    //     response_here = response_here.url
+    //     setResonse(response_here)
 
-        let nftname = res.data.data
-        nftname = nftname.name
-        setnftname_here(nftname)
+    //     let nftname = res.data.data
+    //     nftname = nftname.name
+    //     setnftname_here(nftname)
 
-        let sender_address = res.data.data
-        sender_address = sender_address.useraddress
-        setSendAddress(sender_address)
-        let tokenId_here = res.data.data
-        tokenId_here = tokenId_here.tokenId;
-        setToken_Id(tokenId_here)
-
-
-        alldata_here = res.data.data
-        alldata_here = alldata_here.itemId;
-        let base_price = res.data.data
-        base_price = base_price.price
-        let bidEndTime = res.data.data
-        bidEndTime = bidEndTime.bidEndTime
-        let nftContract = res.data.data
-        nftContract = nftContract.nftContract
-
-        setbase_price(base_price)
-        settokenId(alldata_here)
-        setnftcontactadd(nftContract)
+    //     let sender_address = res.data.data
+    //     sender_address = sender_address.useraddress
+    //     setSendAddress(sender_address)
+    //     let tokenId_here = res.data.data
+    //     tokenId_here = tokenId_here.tokenId;
+    //     setToken_Id(tokenId_here)
 
 
-        var currentDateTime = new Date();
-        let resultInSeconds = currentDateTime.getTime() / 1000;
-        let Time_here = bidEndTime - resultInSeconds
-        let TimeFinal = parseInt(Time_here)
-        console.log("check", TimeFinal);
+    //     alldata_here = res.data.data
+    //     alldata_here = alldata_here.itemId;
+    //     let base_price = res.data.data
+    //     base_price = base_price.price
+    //     let bidEndTime = res.data.data
+    //     bidEndTime = bidEndTime.bidEndTime
+    //     let nftContract = res.data.data
+    //     nftContract = nftContract.nftContract
+
+    //     setbase_price(base_price)
+    //     settokenId(alldata_here)
+    //     setnftcontactadd(nftContract)
 
 
-
-        if (TimeFinal <= 0) {
-            console.log("check");
-            setboluher(false)
-
-        } else {
-            let days = parseInt(TimeFinal / 86400)
-
-            setDays_here(days)
-            TimeFinal = TimeFinal % (86400)
-            let hours = parseInt(TimeFinal / 3600)
-            setHours_here(hours)
-            TimeFinal %= 3600
-            let munites = parseInt(TimeFinal / 60)
-            setMunits_here(munites)
-            TimeFinal %= 60
-            let second_here = parseInt(TimeFinal)
-            setSeconds(second_here)
-
-        }
-
-        console.log("Days_here", alldata_here);
-        try {
-            let nftContractOf = new web3.eth.Contract(nftMarketContractAddress_Abi, nftMarketContractAddress);
-            console.log("tokenId", nftContractOf);
-            let hightbid = await nftContractOf.methods.highestBidderMapping(alldata_here).call();
-            console.log("hightbid", hightbid.bidderAddr);
-            let bidderAdd = hightbid.bidderAddr
-            hightbid = hightbid.amount;
-            hightbid = web3.utils.fromWei(hightbid)
-            setHighestBideradd(bidderAdd)
-
-            sethightbid(hightbid)
-
-        } catch (e) {
-            console.log("Error While HeightestBid", e);
-        }
+    //     var currentDateTime = new Date();
+    //     let resultInSeconds = currentDateTime.getTime() / 1000;
+    //     let Time_here = bidEndTime - resultInSeconds
+    //     let TimeFinal = parseInt(Time_here)
+    //     console.log("check", TimeFinal);
 
 
 
-    };
+    //     if (TimeFinal <= 0) {
+    //         console.log("check");
+    //         setboluher(false)
+
+    //     } else {
+    //         let days = parseInt(TimeFinal / 86400)
+
+    //         setDays_here(days)
+    //         TimeFinal = TimeFinal % (86400)
+    //         let hours = parseInt(TimeFinal / 3600)
+    //         setHours_here(hours)
+    //         TimeFinal %= 3600
+    //         let munites = parseInt(TimeFinal / 60)
+    //         setMunits_here(munites)
+    //         TimeFinal %= 60
+    //         let second_here = parseInt(TimeFinal)
+    //         setSeconds(second_here)
+
+    //     }
+
+    //     console.log("Days_here", alldata_here);
+    //     try {
+    //         let nftContractOf = new web3.eth.Contract(nftMarketContractAddress_Abi, nftMarketContractAddress);
+    //         console.log("tokenId", nftContractOf);
+    //         let hightbid = await nftContractOf.methods.highestBidderMapping(alldata_here).call();
+    //         console.log("hightbid", hightbid.bidderAddr);
+    //         let bidderAdd = hightbid.bidderAddr
+    //         hightbid = hightbid.amount;
+    //         hightbid = web3.utils.fromWei(hightbid)
+    //         setHighestBideradd(bidderAdd)
+
+    //         sethightbid(hightbid)
+
+    //     } catch (e) {
+    //         console.log("Error While HeightestBid", e);
+    //     }
+
+
+
+    // };
 
     
 
@@ -217,10 +219,10 @@ export default function Auctions_NFT() {
         Fatch_Api_data()
         // auction()
 
-        setInterval(() => {
-            getTime()
-            //   heightestbid()
-        }, 1000)
+        // setInterval(() => {
+        //     getTime()
+        //     //   heightestbid()
+        // }, 1000)
       
 
     }, []);

@@ -4,23 +4,24 @@ import {BsArrowClockwise} from 'react-icons/bs'
 import {FaSearch} from 'react-icons/fa'
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
+import Acution_NFT from '../Auction_NFT/Auctions_NFT'
 
-export default function Search_menu() {
-    const {buyAuctionData} = useSelector(state=> state.buyAuction);
+export default function Search_menu({Fatch_Api_data}) {
     const [show, setShow] = React.useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const count = useSelector((state) => state.Totalitemsslice.value)
     return (
         <div className=''>
             <div className="headerContent mt-5">
                 <div className="header-left">
                     <div className="action-reload">
-                        <div className="action-btn text-white " onClick={() => window.location.reload()}>
+                        <div className="action-btn text-white " onClick={Fatch_Api_data}>
                            <BsArrowClockwise className='icon_arrow'/>
                         </div>
-                        <span className="action-name">{buyAuctionData.length} Items</span>
+                        <span className="action-name">{count} Items</span>
                     </div>
                     <div className="">
                         <button type="button" className=" filterbtntt btn btn-outline-primary"  onClick={handleShow}>Filter</button>
