@@ -13,7 +13,7 @@ import { loadWeb3 } from '../../apis/api'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Spinner from 'react-bootstrap/Spinner'
-import {Link, Routes, Route, useNavigate} from 'react-router-dom'
+import { Link, Routes, Route, useNavigate } from 'react-router-dom'
 export default function Biding_NFT() {
 
     const navigate = useNavigate();
@@ -39,6 +39,8 @@ export default function Biding_NFT() {
     const [SendAddress, setSendAddress] = useState()
     const [HighestBideradd, setHighestBideradd] = useState()
     let [isSpinner, setIsSpinner] = useState(false)
+    // let [placeBidButton, setplaceBidButton] = useState(true)
+
     const [Token_Id, setToken_Id] = useState()
     const [nftname_here, setnftname_here] = useState()
     const [Resonse, setResonse] = useState()
@@ -50,12 +52,11 @@ export default function Biding_NFT() {
         const web3 = window.web3;
         let acc = loadWeb3()
 
-
-
         let res = await axios.get(
-            `https://whenftapi.herokuapp.com/OnAuction_marketplace_history?id=100`
+            `https://pegaxy-openmarket.herokuapp.com/OnAuction_marketplace_history?id=100`
         );
 
+        console.log("what is auction data ", res.data.data)
         let response_here = res.data.data[id]
         response_here = response_here.url
         setResonse(response_here)
@@ -100,8 +101,8 @@ export default function Biding_NFT() {
 
         if (TimeFinal <= 0) {
 
-
             setboluher(false)
+            // setplaceBidButton(false)
 
         } else {
             let days = parseInt(TimeFinal / 86400)
@@ -124,7 +125,7 @@ export default function Biding_NFT() {
             let nftContractOf = new web3.eth.Contract(nftMarketContractAddress_Abi, nftMarketContractAddress);
             console.log("tokenId", nftContractOf);
             let hightbid = await nftContractOf.methods.highestBidderMapping(alldata_here).call();
-            console.log("hightbid", hightbid.bidderAddr);
+            console.log("what is highest bid", hightbid.amount);
             let bidderAdd = hightbid.bidderAddr
             hightbid = hightbid.amount;
             hightbid = web3.utils.fromWei(hightbid)
@@ -269,6 +270,8 @@ export default function Biding_NFT() {
 
 
     }, [])
+    console.log('what is base price', base_price)
+    console.log('what is highest bid', hightbid)
 
 
     return (
@@ -391,7 +394,7 @@ export default function Biding_NFT() {
                                         </div>
                                         <div className="title">
                                             <h1>
-                                                <a target="_blank" rel="noreferrer noopener" href="https://polygonscan.com/token/0xD50D167DD35D256e19E2FB76d6b9Bf9F4c571A3E?a=954546" className="id">Oni i My</a>
+                                                <a target="_blank" rel="noreferrer noopener" href="https://polygonscan.com/token/0xD50D167DD35D256e19E2FB76d6b9Bf9F4c571A3E?a=954546" className="id">{nftname_here}</a>
                                             </h1>
                                         </div>
                                         <div className="properties">
@@ -417,40 +420,42 @@ export default function Biding_NFT() {
                                             </div>
                                             <div className="owner text-white">
                                                 <span>Owner: </span>
-                                                0x57cCC...3856A
+                                                {SendAddress?.substring(0, 6) + "..." + SendAddress?.substring(SendAddress.length - 6)}
+
+
                                             </div>
                                         </div>
                                     </div>
                                     <div className="bxPrice">
                                         <div className="sales-ends">
                                             <div className="times">
-
-
                                                 {
                                                     boluher ? (<><div class="holder"> <div class="livenow"> <div></div>  <div></div> <h5></h5></div></div>
                                                         <span className="title text-white">Sales ends July 04, 2022 at 03:38am -07</span>
-                                                    </>) : <span className="span_ended text-white">ENDED</span>
+
+                                                        <div className="countdown">
+                                                            <div className="items">
+                                                                <div className="title">{Days_here}</div>
+                                                                <div className="sub">Days</div>
+                                                            </div>
+                                                            <div className="items">
+                                                                <div className="title">{Hours_here}</div>
+                                                                <div className="sub">Hours</div>
+                                                            </div>
+                                                            <div className="items">
+                                                                <div className="title">{Munits_here}</div>
+                                                                <div className="sub">Minutes</div>
+                                                            </div>
+                                                            <div className="items">
+                                                                <div className="title">{Seconds}</div>
+                                                                <div className="sub">Seconds</div>
+                                                            </div>
+                                                        </div>
+                                                    </>) : <span className="span_ended text-white">SALE ENDED</span>
                                                 }
 
                                             </div>
-                                            <div className="countdown">
-                                                <div className="items">
-                                                    <div className="title">{Days_here}</div>
-                                                    <div className="sub">Days</div>
-                                                </div>
-                                                <div className="items">
-                                                    <div className="title">{Hours_here}</div>
-                                                    <div className="sub">Hours</div>
-                                                </div>
-                                                <div className="items">
-                                                    <div className="title">{Munits_here}</div>
-                                                    <div className="sub">Minutes</div>
-                                                </div>
-                                                <div className="items">
-                                                    <div className="title">{Seconds}</div>
-                                                    <div className="sub">Seconds</div>
-                                                </div>
-                                            </div>
+
                                         </div>
                                         <div className="price-title">
                                             <span>Current price</span>
@@ -462,11 +467,20 @@ export default function Biding_NFT() {
                                             <span className="value">{base_price}</span>
                                             {/* <span className="sub">($3.22)</span> */}
                                         </div>
-                                        <div className="price-button mt-3">
+
+                                        {boluher ? <>
+
+                                            <div className="price-button mt-3">
+                                                <button type="button" className="ps-5 pe-5  animated-button btn btn-primary">
+                                                    <span className='fw-1' style={{ fontWeight: "700" }} onClick={() => setshowbiding(true)}>PLACE A BID</span>
+                                                </button>
+                                            </div>
+                                        </> : <><div className="price-button mt-3">
                                             <button type="button" className="ps-5 pe-5  animated-button btn btn-primary">
-                                                <span className='fw-1' style={{ fontWeight: "700" }} onClick={() => setshowbiding(true)}>PLACE A BID</span>
+                                                <span className='fw-1' style={{ fontWeight: "700" }} onClick={() => claimBidItem()}>Claim A BID</span>
                                             </button>
-                                        </div>
+                                        </div></>}
+
                                     </div>
 
 

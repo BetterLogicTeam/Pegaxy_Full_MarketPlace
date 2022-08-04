@@ -11,28 +11,20 @@ import {  useDispatch } from 'react-redux'
 import { toast } from 'react-toast'
 import axios from 'axios'
 import { useNavigate} from 'react-router-dom'
-
 import {nftMarketContractAddress_Abi,nftMarketContractAddress} from '../../../utils/contract'
 import {loadWeb3}from '../../apis/api'
-import {
-  BrowserRouter as Router,useParams
-} from "react-router-dom";
+import { BrowserRouter as Router,useParams} from "react-router-dom";
 export default function NFT_Buy() {
   const [modalShow, setModalShow] = React.useState(false);
   const [IsSpinner, setIsSpinner] = React.useState(false);
   const [nftcontractadd, Setnftcontractadd] = React.useState();
   const [itemId, SetItemId] = React.useState();
   const [tokenId, Settokenid] = React.useState();
-
   const [nftprice, Setnftprice] = React.useState();
   const [sellerAdress, SetsellerAdress] = React.useState();
   const [nftname, Setnftname] = React.useState();
   const navigate = useNavigate();
   let { id } = useParams();
-
-// console.log('what is param adress',id)
-
-
 
 
 //  const dispatch = useDispatch()
@@ -45,24 +37,24 @@ export default function NFT_Buy() {
     const Fatch_Api_data = async () => {
         try {
             // setWaiting(true)
-            // const web3 = window.web3;
+            const web3 = window.web3;
 
             let res = await axios.get("https://pegaxy-openmarket.herokuapp.com/sell_marketplace_history?id=100")
             console.log("what is response inside NFT_BUT", res.data.data[id]);
             Setnftcontractadd(res.data.data[id].nftContract)
-            // Setnftcontractadd('0x84D1c1F7b33c70eaDCf9f8B29140A18AeC389fCB')
+           
 
             SetItemId(res.data.data[id].itemId)
             Settokenid(res.data.data[id].tokenId)
 
             
             let price_nft=res?.data?.data[id]?.price
-            // price_nft=web3?.utils?.fromWei((price_nft))
+            // price_nft=web3?.utils?.fromWei((price_nft)?.toString())
             Setnftprice(price_nft)
-            //  web3?.utils?.fromWei(nftprice)
+            
 
               SetsellerAdress(res.data.data[id].owner)
-            // SetsellerAdress(Adress.substr(0, 5)+"..."+Adress.substr(Adress.length-5,5))
+            
             Setnftname(res.data.data[id].name)
 
             // res = res.data.data[0]
@@ -112,9 +104,7 @@ export default function NFT_Buy() {
     
               await nftContractOftoken.methods.createMarketSale(itemId,nftcontractadd).send({
                 from: acc,
-                value: (nftprice).toString()
-              
-    
+                value: (nftprice).toString()   
               }
               );
     
@@ -360,7 +350,7 @@ export default function NFT_Buy() {
                       </div>
                       <div className="owner text-white">
                         <span>Owner: </span>
-                        {sellerAdress}
+                        {sellerAdress?.substring(0, 6) + "..." + sellerAdress?.substring(sellerAdress.length - 6)}
                       </div>
                     </div>
                   </div>

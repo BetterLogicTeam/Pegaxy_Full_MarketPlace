@@ -80,6 +80,9 @@ export default function Auctions_NFT() {
             for (let i = 0; i < res_length; i++) {
 
                 let Nft_name = res[i].name
+                let tokenId = res[i].tokenId
+                console.log('what is token id inside auction',tokenId)
+
                 let NFT_price = res[i].price
                 let bidtime = res[i].bidEndTime
                 var currentDateTime = new Date();
@@ -107,7 +110,7 @@ export default function Auctions_NFT() {
 
                 }
 
-                data_Array = [...data_Array, { name: Nft_name, price: NFT_price, BidTime: bidtime, Day: days, Hours: hours, Munites: munites, second_here: second_here }]
+                data_Array = [...data_Array, { name: Nft_name, price: NFT_price, BidTime: bidtime, Day: days, Hours: hours, Munites: munites, second_here: second_here ,tokenId:tokenId}]
                 setArrayHere(data_Array)
                 // console.log("i",data_Array);
 
@@ -274,7 +277,7 @@ export default function Auctions_NFT() {
                                                         <div className="breedcount">
                                                             {/* <i className="fa-solid fa-heart" ></i> */}
                                                             <BsHeartFill className='icon_heart' style={{ textShadow: "rgb(255, 255, 255) 0px 0px 1px" }}>0</BsHeartFill>
-                                                            <span>{index+1}</span>
+                                                            <span>{items.tokenId}</span>
                                                         </div>
                                                     </div>
                                                 </div>
