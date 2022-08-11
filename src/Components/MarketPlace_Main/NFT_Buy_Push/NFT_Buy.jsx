@@ -24,8 +24,10 @@ export default function NFT_Buy() {
   const [sellerAdress, SetsellerAdress] = React.useState();
   const [nftname, Setnftname] = React.useState();
   const navigate = useNavigate();
-  let { id } = useParams();
+  let { id, all_data } = useParams();
+ 
 
+console.log("what is all data param",all_data)
 
 //  const dispatch = useDispatch()
     // const [waiting, setWaiting] = useState(false)
@@ -37,9 +39,15 @@ export default function NFT_Buy() {
     const Fatch_Api_data = async () => {
         try {
             // setWaiting(true)
-            const web3 = window.web3;
-
-            let res = await axios.get("https://pegaxy-openmarket.herokuapp.com/sell_marketplace_history?id=100")
+          const web3 = window.web3;
+          var res;
+          if (all_data == 'all_data') {
+            res = await axios.get("https://pegaxy-openmarket.herokuapp.com/nftmarketplace_history?id=100")
+          }
+          else {
+             res = await axios.get("https://pegaxy-openmarket.herokuapp.com/sell_marketplace_history?id=100")
+            
+          }
             console.log("what is response inside NFT_BUT", res.data.data[id]);
             Setnftcontractadd(res.data.data[id].nftContract)
            
@@ -56,15 +64,9 @@ export default function NFT_Buy() {
               SetsellerAdress(res.data.data[id].owner)
             
             Setnftname(res.data.data[id].name)
-
-            // res = res.data.data[0]
-
-            // console.log("res", res.bidEndTime);
-            // setapiData(res)
-            // setWaiting(false)
-
-            // dispatch(auctiontotalitems(res.length))
-
+  
+          
+         
         } catch (e) {
             console.log("Error while fatching API ", e);
         }

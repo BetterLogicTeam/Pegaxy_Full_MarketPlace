@@ -122,7 +122,7 @@ export default function Buy_nft() {
         apiData?.map((items, index,array) => {
             return (
                 <>
-                    <div className="cardPega default breed-type breed-pacer classPega-1" onClick={()=>Navigate(`/NFT_Buy/${index}`)}>
+                    <div className="cardPega default breed-type breed-pacer classPega-1" onClick={()=>Navigate(`/NFT_Buy/${index}/NFT_Buy`)}>
                         <div className="card-inner flip-card-inner">
                             <div className="hover-action">
                                 <div className="action-inner">i</div>

@@ -239,7 +239,7 @@ export default function Auctions_NFT() {
                         ArrayHere?.map((items, index,array) => {
                             return (
                                 <>
-                                    <div className="cardPega default breed-type breed-pacer classPega-1" onClick={() => navigate('/Biding/' + index)}>
+                                    <div className="cardPega default breed-type breed-pacer classPega-1" onClick={() => navigate(`/Biding/${index}/Auction`)}>
                                         <div className="card-inner flip-card-inner">
                                             <div className="hover-action">
                                                 <div className="action-inner">i</div>

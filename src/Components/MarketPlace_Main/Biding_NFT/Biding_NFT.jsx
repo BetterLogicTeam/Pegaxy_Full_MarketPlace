@@ -18,7 +18,8 @@ export default function Biding_NFT() {
 
     const navigate = useNavigate();
     const [showbiding, setshowbiding] = React.useState(false);
-    const { id } = useParams();
+     let { id, all_data } = useParams();
+
 
 
     const [tokenId, settokenId] = useState()
@@ -51,10 +52,18 @@ export default function Biding_NFT() {
     const auction = async () => {
         const web3 = window.web3;
         let acc = loadWeb3()
-
-        let res = await axios.get(
+        var res;
+        if (all_data == 'all_data') { 
+              res = await axios.get(
+            `https://pegaxy-openmarket.herokuapp.com/nftmarketplace_history?id=100`
+        );
+        }
+        else {
+              res = await axios.get(
             `https://pegaxy-openmarket.herokuapp.com/OnAuction_marketplace_history?id=100`
         );
+        }
+       
 
         console.log("what is auction data ", res.data.data)
         let response_here = res.data.data[id]

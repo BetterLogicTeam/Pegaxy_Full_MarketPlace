@@ -44,7 +44,7 @@ export default function All_NFT() {
         
         try {
             setWaiting(true)
-            let res = await axios.get("https://pegaxy-openmarket.herokuapp.com/nft_market_history?id=100")
+            let res = await axios.get("  https://pegaxy-openmarket.herokuapp.com/nftmarketplace_history?id=100")
             console.log("what is all data respose", res);
             res = res.data.data
             if (res.lenght===0) {
@@ -71,7 +71,7 @@ export default function All_NFT() {
     const getTime = async () => {
         try {
             let res = await axios.get(
-                "https://pegaxy-openmarket.herokuapp.com/nft_market_history?id=100"
+                "https://pegaxy-openmarket.herokuapp.com/nftmarketplace_history?id=100"
             );
             res = res.data.data
             console.log("what is in result ", res);
@@ -80,7 +80,7 @@ export default function All_NFT() {
             // console.log("length_is ",res_length);
             let data_Array = []
             for (let i = 0; i < res_length; i++) {
-
+                let isOnAuction=res[i].isOnAuction
                 let Nft_name = res[i].name
                 let NFT_price = res[i].price
                 let bidtime = res[i].bidEndTime
@@ -109,7 +109,7 @@ export default function All_NFT() {
 
                 }
 
-                data_Array = [...data_Array, { name: Nft_name, price: NFT_price, BidTime: bidtime, Day: days, Hours: hours, Munites: munites, second_here: second_here }]
+                data_Array = [...data_Array, {isOnAuction:isOnAuction, name: Nft_name, price: NFT_price, BidTime: bidtime, Day: days, Hours: hours, Munites: munites, second_here: second_here }]
                 setArrayHere(data_Array)
                 // console.log("i",data_Array);
 
@@ -219,10 +219,10 @@ export default function All_NFT() {
         Fatch_Api_data()
         // auction()
 
-        // setInterval(() => {
-        //     getTime()
-        //     //   heightestbid()
-        // }, 1000)
+        setInterval(() => {
+            getTime()
+            //   heightestbid()
+        }, 1000)
       
 
     }, []);
@@ -235,10 +235,11 @@ export default function All_NFT() {
 
             {waiting ? <div className='text-center text-white'>{condationaldata}</div> : <div className="main_div_buy_nft">
                     {
-                        ArrayHere?.map((items, index,array) => {
+                        ArrayHere?.map((items, index, array) => {
+                            let title= 'all_data'
                             return (
                                 <>
-                                    <div className="cardPega default breed-type breed-pacer classPega-1" onClick={() => navigate('/Biding/' + index)}>
+                                    <div className="cardPega default breed-type breed-pacer classPega-1" onClick={() => { items.isOnAuction==1?(navigate('/Biding/' + index+'/'+title)): (navigate('/NFT_Buy/' + index+'/'+title))}}>
                                         <div className="card-inner flip-card-inner">
                                             <div className="hover-action">
                                                 <div className="action-inner">i</div>
@@ -291,7 +292,9 @@ export default function All_NFT() {
                                                         </div>
                                                     </div>
                                                     <div className="info-right" style={{ color: "#ff9f00" }}>
-                                                        <TimeCard item={items} />
+                                                        
+                                                        {items.isOnAuction ==1 ?(<TimeCard item={items} />):""}
+                                                        
 
 
                                                     </div>

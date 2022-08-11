@@ -39,9 +39,9 @@ function App() {
 
 
         </Route>
-        <Route exact path="/NFT_Buy/:id" element={<NFT_Buy />} />
+        <Route exact path="/NFT_Buy/:id/:all_data" element={<NFT_Buy />} />
 
-        <Route exact path="/Biding/:id" element={<Biding_NFT />} />
+        <Route exact path="/Biding/:id/:all_data" element={<Biding_NFT />} />
 
 
       </Routes>
